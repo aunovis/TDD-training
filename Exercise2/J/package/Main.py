@@ -1,23 +1,26 @@
-def main():    
+class Roversimulator:
+    def __init__(self, a):
+        pass
+
+    def initRobot(self, a, b):
+        return a
+
+    def drive(self, a):
+        return a
+
+    def getRoverPosition(self, ):
+        return "test"
+
+    def getRoverOrientation(self, ):
+        return "test"
+
+    def addObstacle(self, a):
+        return a
+
+
+def main():
     return True
 
-def initMap(a):
-    return a
-
-def initRobot(a,b):
-    return a
-
-def drive(a):
-    return a
-
-def getRoverPosition():
-    return "test"
-    
-def getRoverOrientation():
-    return "test"
-
-def addObstacle(a):
-    return a
 
 if __name__ == '__main__':  # pragma: no cover
     main()
