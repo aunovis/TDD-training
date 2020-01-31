@@ -9,6 +9,9 @@ namespace Hangout2
 
 
 	Rover::Rover(const Grid& grid, Pos position, Dir direction)
+		: m_grid{ grid }
+		, m_position{ position }
+		, m_direction{ direction }
 	{
 	}
 
