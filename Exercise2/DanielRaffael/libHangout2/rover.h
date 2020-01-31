@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <deque>
 
 namespace Hangout2
 {
@@ -39,6 +40,8 @@ namespace Hangout2
 		Pos m_position;
 		Dir m_direction;
 		Grid m_grid;
+
+		std::deque<char> m_queuedCommands;
 
 	public:
 		Rover(const Grid& grid, Pos position, Dir direction);

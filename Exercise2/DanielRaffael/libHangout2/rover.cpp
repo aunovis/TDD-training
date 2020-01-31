@@ -1,5 +1,7 @@
 #include "rover.h"
 
+#include <array>
+
 namespace Hangout2
 {
 	bool Grid::IsFree(Pos position)
@@ -17,11 +19,40 @@ namespace Hangout2
 
 	void Rover::QueueCommands(const char* commands)
 	{
-		
+		const auto count = strlen(commands);
+		m_queuedCommands.insert(std::end(m_queuedCommands), commands, commands + count);
 	}
 
 	TickResult Rover::Tick()
 	{
-		return TickResult::Idle;
+		// Indexed by Dir                               N   W   S  E
+		static constexpr std::array<int, 4> XMovements{ 0, -1,  0, 1 };
+		static constexpr std::array<int, 4> YMovements{ 1,  0, -1, 0 };
+
+		if (m_queuedCommands.empty())
+			return TickResult::Idle;
+
+		const char cmd = m_queuedCommands.front();
+		m_queuedCommands.pop_front();
+
+		if (cmd == 'f' || cmd == 'b')
+		{
+			const auto index = size_t(m_direction);
+			const auto xdiff = XMovements[index];
+			const auto ydiff = YMovements[index];
+
+			if (cmd == 'f')
+			{
+				m_position.x += xdiff;
+				m_position.y += ydiff;
+			}
+			else if (cmd == 'b')
+			{
+				m_position.x -= xdiff;
+				m_position.y -= ydiff;
+			}
+		}
+
+		return TickResult::Running;
 	}
 }
