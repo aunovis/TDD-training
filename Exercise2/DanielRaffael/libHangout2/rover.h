@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 namespace Hangout2
 {
 	struct Pos
@@ -24,11 +26,28 @@ namespace Hangout2
 
 	class Grid
 	{
+	private:
+		std::vector<bool> data;
 
+	public:
+		bool IsFree(Pos position);
 	};
 
 	class Rover
 	{
+	private:
+		Pos m_position;
+		Dir m_direction;
+		Grid m_grid;
 
+	public:
+		Rover(const Grid& grid, Pos position, Dir direction);
+
+		inline Pos Position() const { return m_position; }
+		inline Dir Direction() const { return m_direction; }
+
+		void QueueCommands(const char* commands);
+
+		TickResult Tick();
 	};
 }
