@@ -25,4 +25,34 @@ namespace Hangout2::tests
 		ASSERT_THAT(rover.Position().x, Eq(99));
 		ASSERT_THAT(rover.Position().y, Eq(512));
 	}
+
+	TEST(RoverTests, NorthFacingRoverMovesForward)
+	{
+		Grid grid{};
+		Rover rover{ grid, {0, 0}, Dir::N };
+
+		rover.QueueCommands("ff");
+		rover.Tick();
+		ASSERT_THAT(rover.Position().y, Eq(1));
+		rover.Tick();
+		ASSERT_THAT(rover.Position().y, Eq(2));
+
+		ASSERT_THAT(rover.Position().x, Eq(0));
+	}
+
+	TEST(RoverTests, WestFacingRoverMovesBackwards)
+	{
+		Grid grid{};
+		Rover rover{ grid, {0, 0}, Dir::W };
+
+		rover.QueueCommands("bbbb");
+		rover.Tick();
+		rover.Tick();
+		ASSERT_THAT(rover.Position().x, Eq(2));
+		rover.Tick();
+		rover.Tick();
+		ASSERT_THAT(rover.Position().x, Eq(4));
+
+		ASSERT_THAT(rover.Position().y, Eq(0));
+	}
 }
