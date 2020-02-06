@@ -1,7 +1,20 @@
 class Roversimulator:
     size = 0
     position = (0,0)
-    orientation = 'N'
+    orientation = (0,0)
+    compass = {
+        'N': (0, -1),
+        'W': (1, 0),
+        'S': (0, 1),
+        'O': (0, 1)
+    }
+    revCompass = {
+        (0, -1): 'N',
+        (1, 0): 'W',
+        (0, 1): 'S',
+        (0, 1): 'O'
+    }
+    
 
 
     def __init__(self, a):
@@ -9,19 +22,22 @@ class Roversimulator:
 
     def initRobot(self, a, b):
         self.position = a
-        self.orientation = b
+        self.setOrientation(b)
+
+    def getOrientation(self):
+        return self.revCompass[self.orientation]
+
+    def setOrientation(self,a):
+        self.orientation = self.compass[a]
 
     def drive(self, a):
         return a
 
-    def getRoverPosition(self, ):
-        return "test"
-
-    def getRoverOrientation(self, ):
-        return "test"
-
     def addObstacle(self, a):
         return a
+
+    def __handleCommand(self, command):
+        pass
 
 
 def main():
