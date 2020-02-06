@@ -26,7 +26,7 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(projectx-test example.cpp)
+add_executable(projectx-test RoverTest.cpp)
 target_link_libraries(projectx-test libprojectx gmock_main)
 
 gtest_discover_tests(projectx-test)
