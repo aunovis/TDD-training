@@ -50,10 +50,9 @@ namespace Hangout2
 			const auto index = size_t(m_direction);
 			const auto xdiff = XMovements[index];
 			const auto ydiff = YMovements[index];
-			const auto gridSize = m_grid.Size();
+			const auto gridSize = int(m_grid.Size());
 
 			Pos newPos;
-
 			if (cmd == 'f')
 			{
 				newPos.x = (m_position.x + xdiff) % gridSize;
