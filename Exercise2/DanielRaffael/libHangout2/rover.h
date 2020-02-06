@@ -39,7 +39,7 @@ namespace Hangout2
 
 		inline size_t Size() const { return m_size; }
 
-		bool IsFree(Pos position);
+		bool IsFree(Pos position) const;
 	};
 
 	class Rover

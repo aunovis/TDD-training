@@ -4,7 +4,7 @@
 
 namespace Hangout2
 {
-	bool Grid::IsFree(Pos position)
+	bool Grid::IsFree(Pos position) const
 	{
 		return !m_data[position.y * Size() + position.x];
 	}
