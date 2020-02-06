@@ -1,5 +1,5 @@
 #include "rover.h"
-
+#include <vector>
 #include <array>
 
 namespace Hangout2
@@ -9,6 +9,12 @@ namespace Hangout2
 		return false;
 	}
 
+	Grid::Grid() : m_data(64) { }
+	Grid::Grid(std::vector<bool> data) : m_data(data){ }
+
+	int Grid::GetSize() const
+	{
+	}
 
 	Rover::Rover(const Grid& grid, Pos position, Dir direction)
 		: m_grid{ grid }

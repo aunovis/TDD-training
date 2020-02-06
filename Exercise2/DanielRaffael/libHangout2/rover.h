@@ -12,7 +12,7 @@ namespace Hangout2
 
 	enum class Dir
 	{
-		N,
+		N = 0,
 		W,
 		S,
 		E,
@@ -28,10 +28,14 @@ namespace Hangout2
 	class Grid
 	{
 	private:
-		std::vector<bool> data;
+		std::vector<bool> m_data;
 
 	public:
+		Grid(std::vector<bool> height);
+		Grid();
+
 		bool IsFree(Pos position);
+		int GetSize() const;
 	};
 
 	class Rover
