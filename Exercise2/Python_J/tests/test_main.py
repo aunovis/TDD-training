@@ -9,8 +9,8 @@ class TestMain(unittest.TestCase):
         command1 = ["f", "b", "f", "l", "f", "f", "f", "f", "r", "f",
                     "f", "f", "f", "b", "r", "b", "l", "l", "f", "f", "r", "f", "f"]
         self.assertEqual(roversim.drive(command1), "success")
-        self.assertEqual(roversim.getRoverPosition(), (2, 2))
-        self.assertEqual(roversim.getRoverOrientation(), "N")
+        self.assertEqual(roversim.position, (2, 2))
+        self.assertEqual(roversim.orientation, "N")
         roversim.addObstacle((2, 1))
         self.assertEqual(roversim.drive("f"), "Obstacle at 2,1")
 

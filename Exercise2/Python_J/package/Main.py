@@ -1,9 +1,15 @@
 class Roversimulator:
+    size = 0
+    position = (0,0)
+    orientation = 'N'
+
+
     def __init__(self, a):
-        pass
+        self.size = a
 
     def initRobot(self, a, b):
-        return a
+        self.position = a
+        self.orientation = b
 
     def drive(self, a):
         return a
