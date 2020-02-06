@@ -55,4 +55,47 @@ namespace Hangout2::tests
 
 		ASSERT_THAT(rover.Position().y, Eq(0));
 	}
+
+	TEST(RoverTests, NorthFacingRoverTurnsAround)
+	{
+		Grid grid{};
+		Rover rover{ grid, {0, 0}, Dir::N };
+
+		rover.QueueCommands("llll");
+		rover.Tick();
+		ASSERT_THAT(rover.Direction(), Eq(Dir::W));
+		rover.Tick();
+		ASSERT_THAT(rover.Direction(), Eq(Dir::S));
+		rover.Tick();
+		ASSERT_THAT(rover.Direction(), Eq(Dir::E));
+		rover.Tick();
+		ASSERT_THAT(rover.Direction(), Eq(Dir::N));
+
+		rover.QueueCommands("rrrr");
+		rover.Tick();
+		ASSERT_THAT(rover.Direction(), Eq(Dir::E));
+		rover.Tick();
+		ASSERT_THAT(rover.Direction(), Eq(Dir::S));
+		rover.Tick();
+		ASSERT_THAT(rover.Direction(), Eq(Dir::W));
+		rover.Tick();
+		ASSERT_THAT(rover.Direction(), Eq(Dir::N));
+	}
+
+	TEST(RoverTests, NorthFacingRoverTurnsAroundTwice)
+	{
+		Grid grid{};
+		Rover rover{ grid, {0, 0}, Dir::N };
+
+		rover.QueueCommands("llllllll");
+		rover.Tick();
+		rover.Tick();
+		rover.Tick();
+		rover.Tick();
+		rover.Tick();
+		rover.Tick();
+		rover.Tick();
+		rover.Tick();
+		ASSERT_THAT(rover.Direction(), Eq(Dir::N));
+	}
 }
