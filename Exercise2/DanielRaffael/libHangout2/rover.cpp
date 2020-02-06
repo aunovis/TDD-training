@@ -6,7 +6,7 @@ namespace Hangout2
 {
 	bool Grid::IsFree(Pos position)
 	{
-		return false;
+		return !m_data[position.y * GetSize() + position.x];
 	}
 
 	Grid::Grid() : m_data(64) { }
@@ -14,6 +14,7 @@ namespace Hangout2
 
 	int Grid::GetSize() const
 	{
+		return static_cast<int>(std::sqrt(m_data.size()));
 	}
 
 	Rover::Rover(const Grid& grid, Pos position, Dir direction)
@@ -46,16 +47,32 @@ namespace Hangout2
 			const auto index = size_t(m_direction);
 			const auto xdiff = XMovements[index];
 			const auto ydiff = YMovements[index];
+			const auto gridSize = m_grid.GetSize();
+
+			Pos new_pos;
 
 			if (cmd == 'f')
 			{
-				m_position.x += xdiff;
-				m_position.y += ydiff;
+				new_pos.x = (xdiff + m_position.x) % gridSize;
+				new_pos.y = (ydiff + m_position.y) % gridSize;
 			}
 			else if (cmd == 'b')
 			{
-				m_position.x -= xdiff;
-				m_position.y -= ydiff;
+				new_pos.x = (m_position.x - xdiff) % gridSize;
+				new_pos.y = (m_position.y - ydiff) % gridSize;
+			}
+
+			if (new_pos.x < 0)
+				new_pos.x += gridSize;
+			if (new_pos.y < 0)
+				new_pos.y += gridSize;
+
+			if (m_grid.IsFree(new_pos))
+				m_position = new_pos;
+			else
+			{
+				m_queuedCommands.clear();
+				return TickResult::ObstacleEncountered;
 			}
 		}
 		else if (cmd == 'l' || cmd == 'r')
