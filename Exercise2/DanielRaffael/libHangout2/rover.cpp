@@ -52,6 +52,15 @@ namespace Hangout2
 				m_position.y -= ydiff;
 			}
 		}
+		else if (cmd == 'l' || cmd == 'r')
+		{
+			const int offset = cmd == 'l' ? 1 : -1;
+			int new_direction = static_cast<int>(m_direction) + offset;
+			if (new_direction < 0)
+				new_direction += 4;
+			new_direction %= 4;
+			m_direction = static_cast<Dir>(new_direction);
+		}
 
 		return TickResult::Running;
 	}
