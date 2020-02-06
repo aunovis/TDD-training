@@ -101,11 +101,9 @@ namespace Hangout2::tests
 
 	TEST(RoverTests, DefaultGridState)
 	{
-		Grid grid;
+		Grid grid{};
 
-		auto size = grid.GetSize();
-
-		ASSERT_THAT(size, 8);
+		ASSERT_THAT(grid.Size(), Eq(Grid::DEFAULT_SIZE));
 	}
 
 	TEST(RoverTests, CustomGridState)
@@ -114,9 +112,7 @@ namespace Hangout2::tests
 			        false,false,false,
 			        false,false,false} };
 
-		auto size = grid.GetSize();
-
-		ASSERT_THAT(size, 3);
+		ASSERT_THAT(grid.Size(), Eq(3));
 	}
 
 	TEST(RoverTests, MoveOutOfGrid)

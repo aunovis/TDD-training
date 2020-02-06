@@ -28,14 +28,18 @@ namespace Hangout2
 	class Grid
 	{
 	private:
+		size_t m_size;
 		std::vector<bool> m_data;
 
 	public:
-		Grid(std::vector<bool> height);
+		static constexpr size_t DEFAULT_SIZE = 8;
+
 		Grid();
+		Grid(std::vector<bool> height);
+
+		inline size_t Size() const { return m_size; }
 
 		bool IsFree(Pos position);
-		int GetSize() const;
 	};
 
 	class Rover

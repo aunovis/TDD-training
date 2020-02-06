@@ -1,21 +1,24 @@
 #include "rover.h"
-#include <vector>
+
 #include <array>
 
 namespace Hangout2
 {
 	bool Grid::IsFree(Pos position)
 	{
-		return !m_data[position.y * GetSize() + position.x];
+		return !m_data[position.y * Size() + position.x];
 	}
 
-	Grid::Grid() : m_data(64) { }
-	Grid::Grid(std::vector<bool> data) : m_data(data){ }
+	Grid::Grid()
+		: m_size{ DEFAULT_SIZE }
+		, m_data(DEFAULT_SIZE* DEFAULT_SIZE)
+	{ }
 
-	int Grid::GetSize() const
-	{
-		return static_cast<int>(std::sqrt(m_data.size()));
-	}
+	Grid::Grid(std::vector<bool> data)
+		: m_size{ static_cast<size_t>(std::sqrt(data.size())) }
+		, m_data{ data }
+	{ }
+
 
 	Rover::Rover(const Grid& grid, Pos position, Dir direction)
 		: m_grid{ grid }
@@ -47,28 +50,28 @@ namespace Hangout2
 			const auto index = size_t(m_direction);
 			const auto xdiff = XMovements[index];
 			const auto ydiff = YMovements[index];
-			const auto gridSize = m_grid.GetSize();
+			const auto gridSize = m_grid.Size();
 
-			Pos new_pos;
+			Pos newPos;
 
 			if (cmd == 'f')
 			{
-				new_pos.x = (xdiff + m_position.x) % gridSize;
-				new_pos.y = (ydiff + m_position.y) % gridSize;
+				newPos.x = (m_position.x + xdiff) % gridSize;
+				newPos.y = (m_position.y + ydiff) % gridSize;
 			}
 			else if (cmd == 'b')
 			{
-				new_pos.x = (m_position.x - xdiff) % gridSize;
-				new_pos.y = (m_position.y - ydiff) % gridSize;
+				newPos.x = (m_position.x - xdiff) % gridSize;
+				newPos.y = (m_position.y - ydiff) % gridSize;
 			}
 
-			if (new_pos.x < 0)
-				new_pos.x += gridSize;
-			if (new_pos.y < 0)
-				new_pos.y += gridSize;
+			if (newPos.x < 0)
+				newPos.x += gridSize;
+			if (newPos.y < 0)
+				newPos.y += gridSize;
 
-			if (m_grid.IsFree(new_pos))
-				m_position = new_pos;
+			if (m_grid.IsFree(newPos))
+				m_position = newPos;
 			else
 			{
 				m_queuedCommands.clear();
@@ -78,10 +81,10 @@ namespace Hangout2
 		else if (cmd == 'l' || cmd == 'r')
 		{
 			const int offset = cmd == 'l' ? 1 : -1;
-			int new_direction = static_cast<int>(m_direction) + offset;
+
+			int new_direction = (static_cast<int>(m_direction) + offset) % 4;
 			if (new_direction < 0)
 				new_direction += 4;
-			new_direction %= 4;
 			m_direction = static_cast<Dir>(new_direction);
 		}
 
