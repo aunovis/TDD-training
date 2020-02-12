@@ -106,5 +106,54 @@ namespace MarsRoverTests
             rover.Execute(command);
             Assert.Equal(Direction.North, rover.Direction);
         }
+
+        [Fact]
+        public void WrapRoverEastWest()
+        {
+            var rover = new Rover(0, 20, Direction.West);
+            rover.LandOn(new World(30, 40));
+
+            var command = new[] { 'f' };
+            rover.Execute(command);
+
+            Assert.Equal((29,20),rover.Position);
+
+            command = new[] { 'b' };
+            rover.Execute(command);
+
+            Assert.Equal((0, 20), rover.Position);
+        }
+
+        [Fact]
+        public void WrapRoverNorthSouth()
+        {
+            var rover = new Rover(15, 0, Direction.North);
+            rover.LandOn(new World(30, 40));
+
+            var command = new[] { 'f' };
+            rover.Execute(command);
+
+            Assert.Equal((15,39),rover.Position);
+
+            command = new[] { 'b' };
+            rover.Execute(command);
+
+            Assert.Equal((15, 0), rover.Position);
+        }
+
+        [Fact]
+        public void DetectObstacle()
+        {
+            var rover = new Rover(20, 20, Direction.North);
+            var world = new World(40, 40);
+            world.Obstacles.Add((20,18));
+
+            rover.LandOn(world);
+
+            var command = "fff".ToCharArray();
+
+            Assert.Throws<ObstacleException>(() => rover.Execute(command));
+            Assert.Equal((20, 19), rover.Position);
+        }
     }
 }
