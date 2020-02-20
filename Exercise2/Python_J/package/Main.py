@@ -1,21 +1,23 @@
 class Roversimulator:
     size = 0
-    position = (0,0)
-    orientation = (0,0)
+    position = (0, 0)
+    orientation = (0, 0)
     compass = {
         'N': (0, -1),
         'W': (1, 0),
         'S': (0, 1),
-        'O': (0, 1)
+        'O': (-1, 0)
     }
     revCompass = {
         (0, -1): 'N',
         (1, 0): 'W',
         (0, 1): 'S',
-        (0, 1): 'O'
+        (-1, 0): 'O'
     }
-    
-
+    turntable = [[(0, -1), (1, 0)],
+                 [(1, 0), (0, 1)],
+                 [(0, 1), (-1, 0)],
+                 [(-1, 0), (0, -1)]]
 
     def __init__(self, a):
         self.size = a
@@ -27,17 +29,42 @@ class Roversimulator:
     def getOrientation(self):
         return self.revCompass[self.orientation]
 
-    def setOrientation(self,a):
+    def setOrientation(self, a):
         self.orientation = self.compass[a]
 
     def drive(self, a):
-        return a
+        for command in a:
+            self._handleCommand(command)
+        return "success"
 
     def addObstacle(self, a):
         return a
 
-    def __handleCommand(self, command):
-        pass
+    def _handleCommand(self, command):
+        if command == 'f':
+            newPosition = (self._sphere(self.position[0] + self.orientation[0]), self._sphere(self.position[1] + self.orientation[1]))
+            self.position = newPosition
+        elif command == 'b':
+            newPosition = (self._sphere(self.position[0] - self.orientation[0]), self._sphere(self.position[1] - self.orientation[1]))
+            self.position = newPosition
+        elif command == 'l':
+            self._turnRobot(0)
+        elif command == 'r':
+            self._turnRobot(1)
+
+    def _turnRobot(self, direction):
+        for entry in self.turntable:
+            if entry[direction] == self.orientation:
+                self.orientation = entry[1 - direction]
+                break
+
+    def _sphere(self, coordinate):
+        if coordinate > self.size:
+            return 0
+        elif coordinate < 0:
+            return self.size
+        else:
+            return coordinate
 
 
 def main():
