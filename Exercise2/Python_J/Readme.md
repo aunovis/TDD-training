@@ -1,0 +1,1 @@
+As part of the exercise, I tried to just write one big test that covers everything. In hindsight this was a mistake. It would have been easier to break down multiple testcases to have a faster feedbackloop between testing and implementing.
