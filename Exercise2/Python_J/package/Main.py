@@ -1,3 +1,5 @@
+import operator
+
 class Roversimulator:
     size = 0
     position = (0, 0)
@@ -46,21 +48,20 @@ class Roversimulator:
 
     def _handleCommand(self, command):
         if command == 'f':
-            newPosition = (self._sphere(self.position[0] + self.orientation[0]), self._sphere(self.position[1] + self.orientation[1]))
-            if(self.checkCollision(newPosition)):
-                raise ValueError(f"Obstacle at {newPosition[0]},{newPosition[1]}")
-            else:
-                self.position = newPosition
+            self._setNewPosition(operator.add)
         elif command == 'b':
-            newPosition = (self._sphere(self.position[0] - self.orientation[0]), self._sphere(self.position[1] - self.orientation[1]))
-            if(self.checkCollision(newPosition)):
-                raise ValueError(f"Obstacle at {newPosition[0]},{newPosition[1]}")
-            else:
-                self.position = newPosition
+            self._setNewPosition(operator.sub)
         elif command == 'l':
             self._turnRobot(0)
         elif command == 'r':
             self._turnRobot(1)
+
+    def _setNewPosition(self, op):
+        newPosition = (self._sphere(op(self.position[0], self.orientation[0])), self._sphere(op(self.position[1], self.orientation[1])))
+        if(self.checkCollision(newPosition)):
+            raise ValueError(f"Obstacle at {newPosition[0]},{newPosition[1]}")
+        else:
+            self.position = newPosition
 
     def _turnRobot(self, direction):
         for entry in self.turntable:
