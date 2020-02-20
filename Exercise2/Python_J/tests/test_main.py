@@ -33,6 +33,8 @@ class TestMain(unittest.TestCase):
         self.assertEqual(roversim.getOrientation(), "S")
         roversim.addObstacle((0, 1))
         self.assertEqual(roversim.drive("f"), "Obstacle at 0,1")
+        self.assertEqual(roversim.position, (0, 0))
+        self.assertEqual(roversim.getOrientation(), "S")
 
 
 if __name__ == '__main__':
