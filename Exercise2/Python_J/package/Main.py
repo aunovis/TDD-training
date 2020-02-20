@@ -2,6 +2,7 @@ class Roversimulator:
     size = 0
     position = (0, 0)
     orientation = (0, 0)
+    obstacles= []
     compass = {
         'N': (0, -1),
         'W': (1, 0),
@@ -33,20 +34,29 @@ class Roversimulator:
         self.orientation = self.compass[a]
 
     def drive(self, a):
-        for command in a:
-            self._handleCommand(command)
-        return "success"
+        try:
+            for command in a:
+                self._handleCommand(command)
+            return "success"
+        except ValueError as e:
+            return e.args[0] 
 
     def addObstacle(self, a):
-        return a
+        self.obstacles.append(a)
 
     def _handleCommand(self, command):
         if command == 'f':
             newPosition = (self._sphere(self.position[0] + self.orientation[0]), self._sphere(self.position[1] + self.orientation[1]))
-            self.position = newPosition
+            if(self.checkCollision(newPosition)):
+                raise ValueError(f"Obstacle at {newPosition[0]},{newPosition[1]}")
+            else:
+                self.position = newPosition
         elif command == 'b':
             newPosition = (self._sphere(self.position[0] - self.orientation[0]), self._sphere(self.position[1] - self.orientation[1]))
-            self.position = newPosition
+            if(self.checkCollision(newPosition)):
+                raise ValueError(f"Obstacle at {newPosition[0]},{newPosition[1]}")
+            else:
+                self.position = newPosition
         elif command == 'l':
             self._turnRobot(0)
         elif command == 'r':
@@ -65,6 +75,12 @@ class Roversimulator:
             return self.size
         else:
             return coordinate
+    
+    def checkCollision(self, position):
+        for obstacle in self.obstacles:
+            if(obstacle == position):
+                return True
+        return False
 
 
 def main():
