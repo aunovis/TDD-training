@@ -1,0 +1,9 @@
+[package]
+name = "proj"
+version = "0.1.0"
+authors = ["Michael Hoferer <hoferer@aunovis.de>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
