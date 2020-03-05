@@ -1,5 +1,5 @@
 [package]
-name = "proj"
+name = "adlib"
 version = "0.1.0"
 authors = ["Michael Hoferer <hoferer@aunovis.de>"]
 edition = "2018"
