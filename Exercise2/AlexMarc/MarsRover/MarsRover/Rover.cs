@@ -1,4 +1,7 @@
-﻿namespace MarsRover
+﻿using System;
+using System.Collections.Generic;
+
+namespace MarsRover
 {
     public class Rover
     {
@@ -8,6 +11,8 @@
         public Direction Direction { get; private set; }
 
         private World _world;
+
+        private List<IOutput> _outputs = new List<IOutput>();
 
         public Rover(int x, int y, Direction direction)
             : this((x, y), direction)
@@ -59,6 +64,7 @@
                         break;
                 }
             }
+            Render();
         }
 
         public void LandOn(World world)
@@ -78,6 +84,48 @@
         private bool HitsObstacleAt((int x, int y) position)
         {
             return (_world != null) && _world.Obstacles.Contains(position);
+        }
+
+        //public void AddOutput(IOutput output)
+        //{
+        //    _outputs.Add(output);
+        //}
+
+        private void Render()
+        {
+            for (int y = 0; y < _world.Dimension.y; y++)
+            {
+                for (int x = 0; x < _world.Dimension.x; x++)
+                {
+                    if (_world.Obstacles.Contains((x, y)))
+                    {
+                        Console.Write('\u2588');
+                    }
+                    else if (_position == (x, y))
+                    {
+                        switch (Direction)
+                        {
+                            case Direction.North:
+                                Console.Write('\u2191');
+                                break;
+                            case Direction.South:
+                                Console.Write('\u2193');
+                                break;
+                            case Direction.West:
+                                Console.Write('\u2190');
+                                break;
+                            case Direction.East:
+                                Console.Write('\u2192');
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.Write("\u2591");
+                    }
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
