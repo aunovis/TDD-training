@@ -38,12 +38,12 @@ namespace elevator
 	struct LiftInstallation
 	{
 		size_t floor_count;
-		Floor floors[];
+		Floor* floors;
 	};
 
 	std::tuple<LiftInstallation, Lift> lift_create_installation(size_t floor_count)
 	{
-		return std::make_tuple(LiftInstallation{}, Lift{});
+		return std::make_tuple(LiftInstallation{ floor_count, new Floor[floor_count] }, Lift{});
 	}
 
 	void lift_tick(LiftInstallation const& installation, Lift const& lift)
