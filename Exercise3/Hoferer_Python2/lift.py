@@ -8,13 +8,18 @@ class Lift:
         print("Getting your request for a lift:", order[0], order[1].name)
         self.move_to_floor(order[0])
 
-    def move_to_floor(self, floor):
-        if floor == self.current_floor:
-            print("I am already at the requested floor ... opening doors")
+    def move_to_floor(self, target_floor):
+        if target_floor > self.current_floor:
+            self.current_floor = self.current_floor + 1
+            print("Moving up, passing floor", self.current_floor)
+            return self.move_to_floor(target_floor)
+        elif target_floor < self.current_floor:
+            self.current_floor = self.current_floor - 1
+            print("Moving down, Passing floor", self.current_floor)
+            return self.move_to_floor(target_floor)
         else:
-            print("Moving to requested floor")
-            print("Finally arrived at floor", floor, "... opening doors")
-            self.current_floor = floor
+            print("Arrived at floor", target_floor, "... opening doors")
+            return
 
     def choose_target_floor(self, floor):
         print("Getting your request for target floor:", floor)

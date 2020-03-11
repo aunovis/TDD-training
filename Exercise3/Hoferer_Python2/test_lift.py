@@ -41,7 +41,7 @@ def test_order_lift(start_pos, order, output):
         (0, (2, Direction.UP), 100, 100),
         (5, (1, Direction.DOWN), 5, 5),
         (2, (4, Direction.UP), 4, 4),
-        (100, (100, Direction.UP), 4, 4)
+        (10, (20, Direction.UP), 4, 4)
     ]
 )
 def test_lift_transport(start_pos, order, target_pos, output):
