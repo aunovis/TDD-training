@@ -1,7 +1,5 @@
 import time
 
-from gui import Gui
-
 
 def close_the_doors():
     print("...-> closing doors <-...")
@@ -19,15 +17,10 @@ def ding():
 
 
 class Lift:
-    def __init__(self, gui, current_floor=0):
+    def __init__(self, current_floor=0):
         self.current_floor = current_floor
-        self.gui = gui
-        self.gui.change_to("test")
         print("\n")
         print("Hello, I am Lifty, I am starting at floor", self.current_floor)
-
-    def __del__(self):
-        self.gui.close_gui()
 
     def order(self, order):
         print("Getting your request for a lift:", order[0], order[1].name)
