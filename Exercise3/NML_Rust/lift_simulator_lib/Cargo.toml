@@ -1,0 +1,9 @@
+[package]
+name = "lift_simulator_lib"
+version = "0.1.0"
+authors = ["Ngoc Mai Lam <Lam@aunovis.de>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
