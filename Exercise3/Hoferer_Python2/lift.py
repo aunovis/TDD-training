@@ -1,54 +1,60 @@
 import time
 
+from main import append_new_line
+
+
+def set_status(text):
+    time.sleep(1)
+    append_new_line("status.txt", text)
+    print(text)
+
 
 def close_the_doors():
-    print("...-> closing doors <-...")
-    time.sleep(0.2)
+    set_status("...-> closing doors <-...")
 
 
 def open_the_doors():
-    print("...<- opening doors ->...")
-    time.sleep(0.2)
+    set_status("...<- opening doors ->...")
 
 
 def ding():
-    print("DING!")
-    time.sleep(0.2)
+    set_status("DING!")
 
 
 class Lift:
     def __init__(self, current_floor=0):
         self.current_floor = current_floor
-        print("\n")
-        print("Hello, I am Lifty, I am starting at floor", self.current_floor)
+        set_status("Hello, I am Lifty, I am starting at floor " + str(self.current_floor))
+
+    def __del__(self):
+        set_status("End of test, thanks for driving with Lifty!")
 
     def order(self, order):
-        print("Getting your request for a lift:", order[0], order[1].name)
+        set_status("Getting your request for a lift: " + order[0] + " " + order[1].name)
         close_the_doors()
         self.move_to_floor(0, order[0])
 
     def move_to_floor(self, tracker, target_floor):
-        time.sleep(0.5)
         if target_floor > self.current_floor:
             self.current_floor = self.current_floor + 1
-            print("Moving up, passing floor", self.current_floor)
+            set_status("Moving up, passing floor " + str(self.current_floor))
             tracker = tracker + 1
             return self.move_to_floor(tracker, target_floor)
         elif target_floor < self.current_floor:
             self.current_floor = self.current_floor - 1
-            print("Moving down, Passing floor", self.current_floor)
+            set_status("Moving down, Passing floor " + str(self.current_floor))
             tracker = tracker + 1
             return self.move_to_floor(tracker, target_floor)
         else:
             if tracker == 0:
-                print("Already here! Leaving doors open ...", target_floor)
+                set_status("Already here at floor " + str(target_floor) + "! Leaving doors open ...")
             else:
-                print("Arrived at floor", target_floor)
+                set_status("Arrived at floor" + str(target_floor))
                 ding()
                 open_the_doors()
             return
 
     def choose_target_floor(self, floor):
-        print("Getting your request for target floor:", floor)
+        set_status("Getting your request for target floor: " + str(floor))
         close_the_doors()
         self.move_to_floor(0, floor)
