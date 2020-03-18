@@ -35,6 +35,18 @@ def test_order_lift(start_pos, order, output):
 
 
 @pytest.mark.parametrize(
+    'start_pos, order, output', [
+        (0, (5, Direction.UP), 5),
+        (-1, (-10, Direction.UP), -5),
+    ]
+)
+def test_fast_order(start_pos, order, output):
+    x = Lift(start_pos)
+    x.order(order)
+    assert x.current_floor == output
+
+
+@pytest.mark.parametrize(
     'start_pos, order, target_pos, output', [
         (-5, (5, Direction.UP), 8, 8),
         (10, (2, Direction.DOWN), -1, -1),
