@@ -51,10 +51,7 @@ class Lift:
             tracker = tracker + 1
             return self.move_to_floor(tracker, target_floor)
         else:
-            if tracker == 0:
-                give_status("Already here at floor " + str(target_floor) + "! Leaving my doors open ...")
-            else:
-                self.ding(target_floor)
+            self.ding(target_floor)
             return
 
     def order(self, order):
@@ -65,6 +62,9 @@ class Lift:
 
     def choose_target_floor(self, floor):
         give_status("You pressed the button to get to floor " + str(floor))
-        give_status("Bringing you to the requested floor...")
-        self.close_the_doors()
-        self.move_to_floor(0, floor)
+        if self.current_floor == floor:
+            give_status("Already here at floor " + str(floor) + "! Leaving my doors open ...")
+        else:
+            give_status("Bringing you to the requested floor...")
+            self.close_the_doors()
+            self.move_to_floor(0, floor)

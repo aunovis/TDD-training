@@ -69,9 +69,9 @@ class Window(QtWidgets.QMainWindow):
         self.console_label.setText(last_line)
         if ("Hello" in last_line) | ("opened now" in last_line):
             self.pic.setPixmap(QtGui.QPixmap("img\\lift_open.png"))
-        if "closing doors" in last_line:
+        if "Closing my doors" in last_line:
             self.pic.setPixmap(QtGui.QPixmap("img\\lift_closing.png"))
-        if "opening doors" in last_line:
+        if "Opening my doors" in last_line:
             self.pic.setPixmap(QtGui.QPixmap("img\\lift_opening.png"))
         if "DING" in last_line:
             self.arrow.hide()
