@@ -35,19 +35,20 @@ def test_order_lift(start_pos, order, output):
 
 
 @pytest.mark.parametrize(
-    'start_pos, order, output', [
-        (0, (5, Direction.UP), 5),
-        (-1, (-10, Direction.UP), -5),
+    'start_pos, order, source_floor, target_floor', [
+        (0, (5, Direction.UP), 5, 10)
     ]
 )
-def test_fast_order(start_pos, order, output):
+def test_fast_order(start_pos, order, source_floor, target_floor):
     x = Lift(start_pos)
     x.order(order)
-    assert x.current_floor == output
+    assert x.current_floor == source_floor
+    x.choose_target_floor(target_floor)
+    assert x.current_floor == target_floor
 
 
 @pytest.mark.parametrize(
-    'start_pos, order, target_pos, output', [
+    'start_pos, order, source_floor, target_floor', [
         (-5, (5, Direction.UP), 8, 8),
         (10, (2, Direction.DOWN), -1, -1),
         (0, (2, Direction.UP), 4, 4),
@@ -56,8 +57,9 @@ def test_fast_order(start_pos, order, output):
         (10, (15, Direction.UP), 12, 12)
     ]
 )
-def test_lift_transport(start_pos, order, target_pos, output):
+def test_lift_transport(start_pos, order, source_floor, target_floor):
     x = Lift(start_pos)
     x.order(order)
-    x.choose_target_floor(target_pos)
-    assert x.current_floor == output
+    assert x.current_floor == source_floor
+    x.choose_target_floor(target_floor)
+    assert x.current_floor == target_floor

@@ -3,7 +3,7 @@ import sys
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtGui import QMovie
-from PyQt5.QtWidgets import QVBoxLayout, QWidget, QHBoxLayout
+from PyQt5.QtWidgets import QLCDNumber
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -16,21 +16,34 @@ class Window(QtWidgets.QMainWindow):
         self.setCentralWidget(self._main)
 
         self.button = QtWidgets.QPushButton("Start tests")
+
         self.console_label = QtWidgets.QLabel("Lift output")
-        self.status_label = QtWidgets.QLabel("Lift movement")
+        self.console_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.console_label.setFont(QtGui.QFont("Helvetica", 12))
         self.pic = QtWidgets.QLabel()
         self.pic.setPixmap(QtGui.QPixmap("img\\lift_open.png"))
+
+        self.floor_digit = QtWidgets.QLCDNumber()
+        self.floor_digit.setSegmentStyle(QLCDNumber.Flat)
+        self.floor_digit.setStyleSheet("""QLCDNumber { 
+                                        background-color: black; 
+                                        color: green; }""")
+        self.floor_digit.setFixedSize(275, 100)
+        self.floor_digit.setDigitCount(4)
+        self.floor_digit.setFont(QtGui.QFont("30", QtGui.QFont.Bold))
+        self.floor_digit.display(0)
+
         self.arrow = QtWidgets.QLabel()
         self.arrow_down_gif = QMovie("img\\arrow_down.gif")
         self.arrow_up_gif = QMovie("img\\arrow_up.gif")
 
         layout = QtWidgets.QGridLayout(self._main)
 
-        layout.addWidget(self.button, 0, 0)
-        layout.addWidget(self.console_label, 1, 0)
-        layout.addWidget(self.pic, 2, 0)
-        layout.addWidget(self.status_label, 1, 1)
-        layout.addWidget(self.arrow, 2, 1)
+        layout.addWidget(self.button, 0, 0, 1, -1)
+        layout.addWidget(self.console_label, 1, 0, 1, -1)
+        layout.addWidget(self.floor_digit, 2, 0, 1, 1)
+        layout.addWidget(self.arrow, 2, 1, 1, 1)
+        layout.addWidget(self.pic, 3, 0, 1, -1)
 
         self.process = QtCore.QProcess()
         self.process.setProgram(sys.executable)
@@ -75,3 +88,5 @@ class Window(QtWidgets.QMainWindow):
             self.arrow.setMovie(self.arrow_down_gif)
             self.arrow_down_gif.start()
             self.arrow.show()
+        if "floor:" in last_line:
+            self.floor_digit.display(int(last_line.split("floor: ")[1]))
