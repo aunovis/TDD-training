@@ -23,7 +23,7 @@ def append_new_line(file_name, text_to_append):
 
 
 def give_status(text):
-    time.sleep(1)
+    time.sleep(0)
     append_new_line("status.txt", "Lifty: " + text)
     print(text)
 

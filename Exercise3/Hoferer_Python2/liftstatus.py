@@ -9,3 +9,5 @@ class LiftStatus(Enum):
     CLOSING_DOORS = 5
     OPENING_DOORS = 6
     ARRIVING_WITH_DING = 7
+    START = 8
+    FINISH = 9
