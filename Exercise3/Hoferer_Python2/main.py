@@ -1,4 +1,5 @@
 import sys
+import time
 
 from PyQt5.QtWidgets import QApplication
 
@@ -19,6 +20,12 @@ def append_new_line(file_name, text_to_append):
         if len(data) > 0:
             file_object.write("\n")
         file_object.write(text_to_append)
+
+
+def give_status(text):
+    time.sleep(1)
+    append_new_line("status.txt", "Lifty: " + text)
+    print(text)
 
 
 if __name__ == "__main__":

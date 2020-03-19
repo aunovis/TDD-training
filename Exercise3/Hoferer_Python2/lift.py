@@ -1,13 +1,5 @@
-import time
-
-from main import append_new_line
+from main import give_status
 from liftstatus import *
-
-
-def give_status(text):
-    time.sleep(1)
-    append_new_line("status.txt", "Lifty: " + text)
-    print(text)
 
 
 class Lift:
