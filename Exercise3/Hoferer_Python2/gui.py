@@ -8,9 +8,9 @@ from PyQt5.QtWidgets import QLCDNumber
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
-class Window(QtWidgets.QMainWindow):
+class Gui(QtWidgets.QMainWindow):
     def __init__(self):
-        super(Window, self).__init__()
+        super(Gui, self).__init__()
 
         self._main = QtWidgets.QWidget()
         self.setCentralWidget(self._main)

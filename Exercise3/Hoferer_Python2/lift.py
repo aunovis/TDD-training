@@ -68,6 +68,6 @@ class Lift:
             LiftStatus.CLOSING_DOORS: "Closing my doors...",
             LiftStatus.CLOSED_DOORS: "Doors are closed now",
             LiftStatus.START: "Hello, I am Lifty, I am starting at floor: " + str(self.current_floor),
-            LiftStatus.FINISH: "End of test, thanks for driving with Lifty!"
+            LiftStatus.FINISH: "End of tests, thanks for driving with Lifty!"
         }
         return switcher.get(i, "Invalid status")

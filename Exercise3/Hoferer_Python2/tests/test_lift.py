@@ -1,7 +1,7 @@
 import pytest
 
-from lift import *
-from direction import *
+from direction import Direction
+from lift import Lift
 
 
 @pytest.mark.parametrize(

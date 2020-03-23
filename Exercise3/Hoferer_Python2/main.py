@@ -3,12 +3,12 @@ import time
 
 from PyQt5.QtWidgets import QApplication
 
-from window import Window
+from gui import Gui
 
 
 def init_gui():
     app = QApplication(sys.argv)
-    window = Window()
+    window = Gui()
     window.show()
     sys.exit(app.exec_())
 

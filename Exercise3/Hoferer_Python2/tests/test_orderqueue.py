@@ -1,7 +1,7 @@
 import pytest
 
 from direction import Direction
-from orderqueue import *
+from orderqueue import OrderQueue
 
 
 @pytest.mark.parametrize(
